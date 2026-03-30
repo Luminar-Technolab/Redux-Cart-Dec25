@@ -689,7 +689,8 @@
             2. Action 📦 : An object that describes what happened.
             3. Reducer 🔄 : A function that decides how state changes.
             4. Dispatch 🚀 : Used to send actions to the reducer.
-        - Work Flow : User Action → Dispatch → Reducer → Store Update → UI Re-render
+            6. Slice : Is a combination of action & reducer
+        - Work Flow : Component → Dispatch Action → Reducer → Store Update → UI Re-render
         - Packages installed to use Redux in React App
             - React-Redux : Official React bindings for Redux - npm install react-redux
                 - Provider : makes the Redux store available to all components in your app.
@@ -700,6 +701,7 @@
                 - createReducer() : used to create reducer, updatee state will be stored in reducer
                 - createAction() : used to generate action, logic to update state value
                 - createSlice() : used to combine action and its reducer together
+                - createAsyncThunk() : used to make asynchronous action in redux, It accepts an action type string and a function that returns a promise, and generates a thunk that dispatches pending/fulfilled/rejected action types based on that promise
         - To Implement Redux logic in an existing react app
             1. Install npm install @reduxjs/toolkit react-redux
             2. Create a redux folder in src 
