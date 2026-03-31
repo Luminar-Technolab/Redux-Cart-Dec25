@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //asynchorus action - should be dispatch by Product component
-export const getAllProducts = createAsyncThunk("products/getAllProducts",async ()=>{
+export const getAllProducts = createAsyncThunk("products/getAllProducts",async ()=>{   
 const result = await axios.get("https://dummyjson.com/products")
 // console.log(result.data.products);
 return result.data.products
@@ -13,29 +13,37 @@ const productSlice = createSlice({
     initialState:{
         loading:true,
         allProducts:[],
+        dummyAllProducts:[],
         error:""
     },
     reducers:{
         //resolve only synchronous actions
+        searchProduct:(state,action)=>{
+          state.allProducts =  state.dummyAllProducts.filter(item=>item.title.toLowerCase().includes(action.payload.toLowerCase()))
+        }
     },
     extraReducers:(builder)=>{
         // it resolve asynchronous action , Add reducers for additional action types here, and handle loading state as needed
         builder.addCase(getAllProducts.fulfilled,(state,action)=>{
             state.allProducts = action.payload
+            state.dummyAllProducts = action.payload
             state.loading = false
             state.error = ""
         })
         builder.addCase(getAllProducts.pending,(state,action)=>{
             state.allProducts = []
+            state.dummyAllProducts = []
             state.loading = true
             state.error = ""
         })
         builder.addCase(getAllProducts.rejected,(state,action)=>{
             state.allProducts = []
+            state.dummyAllProducts = []
             state.loading = false
             state.error = "API Call failed"
         })
     }
 })
 
+export const {searchProduct} = productSlice.actions
 export default productSlice.reducer
